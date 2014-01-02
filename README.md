@@ -36,6 +36,16 @@ end
 
 See also: [Integrating OmniAuth Into Your Application](https://github.com/intridea/omniauth#integrating-omniauth-into-your-application).
 
+## Example
+
+In the `example/` directory, run the provided Sinatra application for a demo:
+
+    $ cd example/
+    $ bundle
+    $ SPLITWISE_KEY=abc123 SPLITWISE_SECRET=def456 rackup
+
+Then visit [localhost:9292](http://localhost:9292) to try it out.
+
 ## Contributing
 
 1. Fork it
