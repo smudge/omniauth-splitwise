@@ -1,0 +1,26 @@
+PATH
+  remote: .
+  specs:
+    omniauth-splitwise (0.0.1)
+      multi_json
+      omniauth-oauth (~> 1.0.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    hashie (2.0.5)
+    multi_json (1.8.2)
+    oauth (0.4.7)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
+    rack (1.5.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  omniauth-splitwise!
