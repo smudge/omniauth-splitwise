@@ -17,4 +17,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'omniauth-oauth', '~> 1.0.0'
   s.add_runtime_dependency 'multi_json'
+
+  s.add_development_dependency 'rspec', '~> 2.7.0'
 end
