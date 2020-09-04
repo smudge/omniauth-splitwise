@@ -1,6 +1,6 @@
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 
-require 'omniauth-splitwise/version'
+require 'omniauth_splitwise/version'
 
 Gem::Specification.new do |s|
   s.name     = 'omniauth-splitwise'
