@@ -1,36 +1,39 @@
-require 'omniauth/strategies/oauth'
+require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class Splitwise < OmniAuth::Strategies::OAuth
-      option :name, "splitwise"
+    class Splitwise < OmniAuth::Strategies::OAuth2
+      BASE_SITE = 'https://secure.splitwise.com/'.freeze
 
-      option :client_options, {
-        :site => 'https://secure.splitwise.com',
-        :request_token_path => '/api/v3.0/get_request_token',
-        :access_token_path => '/api/v3.0/get_access_token',
-        :authorize_path => '/authorize',
-        :http_method => :post,
-        :scheme => :header
-      }
+      option :name, "splitwise"
+      option :client_options, site: BASE_SITE
 
       uid do
-        user_data['id']
+        raw_info.fetch('id')
       end
 
       info do
-        user_data
+        {
+          'first_name' => raw_info['first_name'],
+          'last_name' => raw_info['last_name'],
+          'email' => raw_info['email'],
+        }
       end
 
-private
-
-      def user_data
-        @info ||= MultiJson.decode(access_token.get('/api/v3.0/get_current_user').body)['user']
+      extra do
+        raw_info
       end
 
-      def callback_phase
-        session['oauth'][name.to_s]['callback_confirmed'] = true
-        super
+      private
+
+      def raw_info
+        @raw_info ||= access_token.get('/api/v3.0/get_current_user').parsed['user']
+      end
+
+      # We must override callback_url due to this issue:
+      # https://github.com/omniauth/omniauth-oauth2/issues/93
+      def callback_url
+        full_host + script_name + callback_path
       end
     end
   end
