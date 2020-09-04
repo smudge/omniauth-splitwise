@@ -3,31 +3,31 @@ require 'omniauth-oauth2'
 module OmniAuth
   module Strategies
     class Splitwise < OmniAuth::Strategies::OAuth2
-      BASE_SITE = 'https://secure.splitwise.com/'
+      BASE_SITE = 'https://secure.splitwise.com/'.freeze
 
       option :name, "splitwise"
       option :client_options, site: BASE_SITE
 
       uid do
-        raw_info['id']
+        raw_info.fetch('id')
       end
 
       info do
         {
-          first_name: raw_info['first_name'],
-          last_name: raw_info['last_name'],
-          email: raw_info['email'],
+          'first_name' => raw_info['first_name'],
+          'last_name' => raw_info['last_name'],
+          'email' => raw_info['email'],
         }
       end
 
       extra do
-        { raw_info: raw_info }
+        raw_info
       end
 
-    private
+      private
 
       def raw_info
-        @raw_info||= access_token.get('/api/v3.0/get_current_user').parsed['user']
+        @raw_info ||= access_token.get('/api/v3.0/get_current_user').parsed['user']
       end
 
       # We must override callback_url due to this issue:
