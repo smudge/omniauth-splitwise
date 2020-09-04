@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*']
 
   s.add_runtime_dependency 'omniauth-oauth2', '~> 1.0'
-  s.add_runtime_dependency 'multi_json', '~> 1.0'
 
   s.add_development_dependency 'rspec', '~> 3.0'
 end
