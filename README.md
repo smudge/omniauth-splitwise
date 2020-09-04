@@ -1,6 +1,9 @@
 # OmniAuth Splitwise
 
-An OmniAuth strategy for authenticating to [Splitwise](http://www.splitwise.com). To use it, you'll need to [sign up for a Consumer Key and Secret](https://secure.splitwise.com/oauth_clients).
+An OmniAuth strategy for authenticating to [Splitwise](http://www.splitwise.com).
+To use it, you'll need to [sign up for a Consumer Key and Secret](https://secure.splitwise.com/oauth_clients).
+
+As of 2020, this gem uses OAuth 2.0 to interface with Splitwise.
 
 ## Installation
 
@@ -16,13 +19,13 @@ Or install it yourself:
 
     $ gem install omniauth-splitwise
 
-## Usage
+## App Setup
 
 For Rack apps, in your config.ru:
 
 ```ruby
 use OmniAuth::Builder do
-  provider :splitwise, ENV['SPLITWISE_KEY'], ENV['SPLITWISE_SECRET']
+  provider :splitwise, ENV.fetch('SPLITWISE_KEY'), ENV.fetch('SPLITWISE_SECRET')
 end
 ```
 
@@ -30,11 +33,37 @@ For Rails apps, in config/initializers/omniauth.rb:
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :splitwise, ENV['SPLITWISE_KEY'], ENV['SPLITWISE_SECRET']
+  provider :splitwise, ENV.fetch('SPLITWISE_KEY'), ENV.fetch('SPLITWISE_SECRET')
 end
 ```
 
 See also: [Integrating OmniAuth Into Your Application](https://github.com/intridea/omniauth#integrating-omniauth-into-your-application).
+
+### Usage
+
+Once a successful OAuth2 request has been made, several fields are available immediately:
+
+```ruby
+auth = request.env['omniauth.auth']
+
+auth['provider']  # => 'splitwise'
+auth['uid']       # => Splitwise User ID
+auth['info']      # => A hash containing 'first_name', 'last_name', and 'email'
+auth['extra']     # => The full user hash from /api/v3.0/get_current_user
+```
+
+Additionally, the bearer token may be extracted and reused:
+
+```ruby
+auth = request.env['omniauth.auth']
+
+token = auth['credentials']['token']
+client = OAuth2::Client.new(ENV["SPLITWISE_KEY"], ENV["SPLITWISE_SECRET"])
+access_token = OAuth2::AccessToken.new(client, splitwise_token)
+
+# Start making API requests:
+access_token.get('/api/v3.0/get_current_user').parsed
+```
 
 ## Contributing
 
