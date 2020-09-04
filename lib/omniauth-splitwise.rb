@@ -1,2 +1,2 @@
-require "omniauth/splitwise/version"
+require "omniauth-splitwise/version"
 require 'omniauth/strategies/splitwise'
