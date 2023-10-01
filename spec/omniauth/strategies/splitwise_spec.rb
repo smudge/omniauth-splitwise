@@ -25,6 +25,10 @@ describe "OmniAuth::Strategies::Splitwise" do
     it 'has correct authorize path' do
       expect(subject.client.options[:authorize_url]).to eq('oauth/authorize')
     end
+
+    it 'has correct authorization scheme' do
+      expect(subject.client.options[:auth_scheme]).to eq(:request_body)
+    end
   end
 
   describe '#uid' do
