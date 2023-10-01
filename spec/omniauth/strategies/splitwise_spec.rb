@@ -7,45 +7,43 @@ describe "OmniAuth::Strategies::Splitwise" do
 
   context 'client options' do
     it 'has correct provider name' do
-      subject.options.name eq('splitwise')
+      expect(subject.options.name).to eq('splitwise')
     end
 
     it 'has correct Splitwise site' do
-      subject.options.client_options.site.should eq('https://secure.splitwise.com/')
+      expect(subject.options.client_options.site).to eq('https://secure.splitwise.com/')
     end
 
     it 'has correct callback uri' do
-      subject.callback_path.should eq('/auth/splitwise/callback')
+      expect(subject.callback_path).to eq('/auth/splitwise/callback')
     end
 
     it 'has correct token path' do
-      subject.client.options[:token_url].should eq('/oauth/token')
+      expect(subject.client.options[:token_url]).to eq('oauth/token')
     end
 
     it 'has correct authorize path' do
-      subject.client.options[:authorize_url].should eq('/oauth/authorize')
+      expect(subject.client.options[:authorize_url]).to eq('oauth/authorize')
     end
   end
 
-  context '#uid' do
+  describe '#uid' do
     before :each do
-      subject.stub(
-        raw_info: {
-          'id' => '123',
-          'first_name' => 'Marie',
-          'last_name' => 'Curie',
-          'email' => 'mc@example.org',
-          'other_data' => 0o12345,
-        },
+      allow(subject).to receive(:raw_info).and_return( # rubocop:disable RSpec/SubjectStub
+        'id' => '123',
+        'first_name' => 'Marie',
+        'last_name' => 'Curie',
+        'email' => 'mc@example.org',
+        'other_data' => 0o12345,
       )
     end
 
     it 'returns the id from user_data' do
-      subject.uid.should eq('123')
-      subject.info['first_name'].should eq('Marie')
-      subject.info['last_name'].should eq('Curie')
-      subject.info['email'].should eq('mc@example.org')
-      subject.extra['other_data'].should eq(0o12345)
+      expect(subject.uid).to eq('123')
+      expect(subject.info['first_name']).to eq('Marie')
+      expect(subject.info['last_name']).to eq('Curie')
+      expect(subject.info['email']).to eq('mc@example.org')
+      expect(subject.extra['other_data']).to eq(0o12345)
     end
   end
 end

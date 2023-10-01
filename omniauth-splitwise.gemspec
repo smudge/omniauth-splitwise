@@ -10,13 +10,10 @@ Gem::Specification.new do |s|
   s.summary  = 'Splitwise strategy for OmniAuth'
   s.homepage = 'https://github.com/smudge/omniauth-splitwise'
   s.license  = 'MIT'
+  s.metadata['rubygems_mfa_required'] = 'true'
 
   s.files = Dir['{lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
-  s.test_files = Dir['spec/**/*']
 
+  s.required_ruby_version = '>= 2.6'
   s.add_runtime_dependency 'omniauth-oauth2', '~> 1.0'
-
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec', '~> 3.0'
-  s.add_development_dependency 'rubocop-betterment'
 end
