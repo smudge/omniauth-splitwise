@@ -6,7 +6,7 @@ module OmniAuth
       BASE_SITE = 'https://secure.splitwise.com/'.freeze
 
       option :name, "splitwise"
-      option :client_options, site: BASE_SITE
+      option :client_options, site: BASE_SITE, auth_scheme: :request_body
 
       uid do
         raw_info.fetch('id')
