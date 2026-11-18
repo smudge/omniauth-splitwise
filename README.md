@@ -59,7 +59,7 @@ auth = request.env['omniauth.auth']
 
 token = auth['credentials']['token']
 client = OAuth2::Client.new(ENV["SPLITWISE_KEY"], ENV["SPLITWISE_SECRET"])
-access_token = OAuth2::AccessToken.new(client, splitwise_token)
+access_token = OAuth2::AccessToken.new(client, token)
 
 # Start making API requests:
 access_token.get('/api/v3.0/get_current_user').parsed
