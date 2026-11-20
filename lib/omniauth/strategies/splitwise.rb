@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
     class Splitwise < OmniAuth::Strategies::OAuth2
-      BASE_SITE = 'https://secure.splitwise.com/'.freeze
+      BASE_SITE = 'https://secure.splitwise.com/'
 
       option :name, "splitwise"
       option :client_options, site: BASE_SITE, auth_scheme: :request_body
