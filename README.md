@@ -1,4 +1,4 @@
-# OmniAuth Splitwise
+# OmniAuth Splitwise [![RubyGems downloads](https://img.shields.io/gem/dt/omniauth-splitwise.svg)](https://rubygems.org/gems/omniauth-splitwise)
 
 An OmniAuth strategy for authenticating to [Splitwise](http://www.splitwise.com).
 To use it, you'll need to [sign up for a Consumer Key and Secret](https://secure.splitwise.com/oauth_clients).
