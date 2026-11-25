@@ -33,6 +33,21 @@ describe "OmniAuth::Strategies::Splitwise" do
     end
   end
 
+  describe 'user response' do
+    it 'extracts the user from the API response' do
+      user = { 'id' => 123, 'email' => 'mc@example.org' }
+      response = instance_double(OAuth2::Response, parsed: { 'user' => user })
+      token = instance_double(OAuth2::AccessToken)
+      allow(subject).to receive(:access_token).and_return(token) # rubocop:disable RSpec/SubjectStub
+      allow(token).to receive(:get).with('/api/v3.0/get_current_user').and_return(response)
+
+      expect(subject.uid).to eq(123)
+      expect(subject.info['email']).to eq('mc@example.org')
+      expect(subject.extra['id']).to eq(123)
+      expect(token).to have_received(:get).once
+    end
+  end
+
   describe '#uid' do
     before :each do
       allow(subject).to receive(:raw_info).and_return( # rubocop:disable RSpec/SubjectStub
